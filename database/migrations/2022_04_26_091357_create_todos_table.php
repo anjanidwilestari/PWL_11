@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('todo');
             $table->string('label');
             $table->boolean('done');
-            $table->timestamp();
+            $table->timestamps();
         });
     }
 
@@ -32,7 +32,5 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('todos');
-            
-        });
     }
 };
