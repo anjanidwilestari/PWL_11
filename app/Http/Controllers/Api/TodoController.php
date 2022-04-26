@@ -32,7 +32,7 @@ class TodoController extends Controller
         $todo->user()->associate($user);
         $todo->save();
 
-        return $this->apiSuccess($todo->load('users'));
+        return $this->apiSuccess($todo->load('user'));
     }
 
     public function show(Todo $todo)
@@ -48,17 +48,20 @@ class TodoController extends Controller
         $todo->done=$request->done;
         $todo->save();
 
-        return $this->apiSuccess($todo->load('users'));
+        return $this->apiSuccess($todo->load('user'));
     }
 
     public function destroy(Todo $todo)
     {
-        if(auth()->user()->id=$todo->user_id){
-            $todo->delete;
-            return $this->apiError(
+        if(auth()->user()->id==$todo->user_id)
+        {
+            $todo->delete();
+            return $this->apiSuccess($todo);
+        }
+        return $this->apiError(
                 'Unauthorized',
                 Response::HTTP_UNAUTHORIZED
             );
-        }
     }
 }
+
